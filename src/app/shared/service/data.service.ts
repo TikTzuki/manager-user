@@ -73,12 +73,15 @@ export class DataService {
       )
   }
 
-  delete(url: string, params?: any) {
+  delete(url: string, params?: any):Observable<Response> {
     let options = {};
     this.setHeaders(options);
 
-    this.http.delete(url, options)
-      .subscribe((res) => { console.log(res) });
+    return this.http.delete(url, options).pipe(tap((res:Response)=>{
+      console.log(res);
+      return res;
+    }),
+    catchError(this.handleError));
   }
 
   private handleError(error: any) {

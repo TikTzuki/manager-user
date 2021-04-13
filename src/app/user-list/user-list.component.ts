@@ -47,6 +47,5 @@ export class UserListComponent implements OnInit {
 
   deleteUser(id:number){
     this.service.deleteUser(id);
-    window.location.reload();
   }
 }

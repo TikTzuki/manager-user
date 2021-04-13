@@ -66,10 +66,9 @@ export class SecurityService {
       })
     ).subscribe({
       next: res => {
-        if(res){
           this.SetAuthorizationData(res.token, res.refreshToken);
-        }
-      }
+      },
+      error: (err) => window.alert("wrong username or password")
     });
   }
 
@@ -85,10 +84,9 @@ export class SecurityService {
       })
     ).subscribe({
       next: res=>{
-        if(res){
-          // this.SetAuthorizationData(res.token, res.refreshToken);
-        }
-      }
+          window.alert("success!!!");
+      },
+      error: err => window.alert("user is already exists")
     })
   }
 
