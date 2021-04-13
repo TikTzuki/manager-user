@@ -1,0 +1,84 @@
+@import '../../../../assets/scss/black-dashboard.scss';
+.navbar-primary {
+    background-color: $dark;
+    height: 100vh;
+    width: 100%;
+    z-index: 8;
+    overflow: hidden;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.navbar-primary .navbar-primary-menu {
+    padding-left: 10px;
+}
+
+.navbar-primary.collapsed {
+    width: 60px;
+}
+
+.navbar-primary.collapsed .glyphicon {
+    font-size: 22px;
+}
+
+.navbar-primary.collapsed .nav-label {
+    display: none;
+}
+
+.btn-expand-collapse {
+    position: absolute;
+    display: block;
+    left: 0px;
+    bottom: 0;
+    width: 100%;
+    padding: 8px 0;
+    border-top: solid 1px #666;
+    color: grey;
+    font-size: 20px;
+    text-align: center;
+}
+
+.btn-expand-collapse:hover,
+.btn-expand-collapse:focus {
+    background-color: #222;
+    color: $primary;
+    text-shadow: 5px solid $primary;
+}
+
+.btn-expand-collapse:active {
+    background-color: #111;
+}
+
+.navbar-primary-menu li a .glyphicon {
+    margin-right: 6px;
+}
+
+.navbar-primary-menu li a:hover .glyphicon {
+    color: $primary
+}
+
+.navbar-primary.collapsed .nav-label {
+    display: none;
+}
+
+.navbar-primary-menu li a {
+    display: block;
+    padding: 10px 18px;
+    text-align: left;
+    border-bottom: solid 1px #444;
+}
+
+.navbar-primary-menu li a:hover {
+    text-decoration: none;
+    color: $primary;
+    border-bottom: solid 1px $primary;
+    box-shadow: 0px 0px 2px $secondary, 0px 0px 4px $secondary, 0px 0px 6px $primary, 0px 0px 8px $primary;
+    text-shadow: 0px 0px 1px $primary, 0px 0px 1px $primary;
+}
+
+.active {
+    color: $primary;
+    box-shadow: 0px 0px 2px $secondary, 0px 0px 4px $secondary, 0px 0px 6px $primary, 0px 0px 8px $primary;
+    text-shadow: 0px 0px 1px $primary, 0px 0px 1px $primary;
+}

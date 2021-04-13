@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="row justify-content-center" *ngIf="Authenticated">
+        <app-header></app-header>
+    </div>
+    <div class="row" *ngIf="Authenticated">
+        <div class="col-md-2">
+            <app-navbar></app-navbar>
+        </div>
+        <div class="col-md-10">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div class="row" *ngIf="!Authenticated">
+        <div class="col-12 login-background d-flex align-items-center">
+            <button class="btn btn-sm" (click)="swichlog()"> {{isLoggin?'Create Account':'Sign-in'}} </button>
+            <app-login *ngIf="isLoggin"></app-login>
+            <app-register *ngIf="!isLoggin"></app-register>
+        </div>
+    </div>
+</div>

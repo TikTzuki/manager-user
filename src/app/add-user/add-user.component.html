@@ -1,0 +1,56 @@
+<form *ngIf="userForm" [formGroup]="userForm">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Username</span>
+        </div>
+        <input [readonly]="!isNaN(id)" type="text" class="form-control" formControlName="userName">
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Phone Number</span>
+        </div>
+        <input type="text" class="form-control" formControlName="phoneNumber">
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Email</span>
+        </div>
+        <input type="text" class="form-control" formControlName="email">
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Password</span>
+        </div>
+        <input [type]="isShow?'text':'password'" class="form-control" formControlName="password">
+        <div class="input-group-append">
+            <span (click)="togglePassword()" style="width: 2rem; justify-content: center; display: flex; align-items: center; cursor: pointer;">
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="openid" [checked]="this.isContraintScope('openid')" (change)="handleCheckScope($event)" style="opacity: 1; visibility: visible;">
+            <label class="form-check-label" for="flexCheckChecked">
+                    Active
+            </label>
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="read:user" [checked]="this.isContraintScope('read:user')" (change)="handleCheckScope($event)" style="opacity: 1; visibility: visible;">
+            <label class="form-check-label" for="flexCheckChecked">
+                   Read User 
+            </label>
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="write:user" [checked]="this.isContraintScope('write:user')" (change)="handleCheckScope($event)" style="opacity: 1; visibility: visible;">
+            <label class="form-check-label" for="flexCheckChecked">
+                   Write User 
+            </label>
+        </div>
+    </div>
+    <button class="btn btn-primary" (click)="saveUser(id)"> Submit </button>
+</form>

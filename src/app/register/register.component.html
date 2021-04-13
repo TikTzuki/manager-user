@@ -1,0 +1,34 @@
+<!-- <div class="login-background d-flex align-items-center"> -->
+<div class="login-form" [formGroup]="authForm">
+    <h1>Create Account</h1>
+    <div class="form-input-material">
+        <input type="text" name="username" id="username" formControlName="username" class="form-control-material" />
+        <label for="username">Username</label>
+    </div>
+    <small *ngIf="username.invalid && (username.dirty || username.touched)" class="alert-sm"> Invalid phone number </small>
+    <div class="form-input-material">
+        <input type="password" name="password" id="password" formControlName="password" class="form-control-material" />
+        <label for="password">Password</label>
+    </div>
+    <small *ngIf="password.invalid && (password.dirty || password.touched)" class="alert-sm"> Invalid password </small>
+    <div class="form-input-material">
+        <input type="password" formControlName="confirmPassword" class="form-control-material" />
+        <label for="password">Confirm Password</label>
+    </div>
+    <small *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="alert-sm"> Invalid password </small>
+
+    <div class="form-input-material">
+        <input type="text" formControlName="email" class="form-control-material" />
+        <label for="password">Email</label>
+    </div>
+    <small *ngIf="email.invalid && (email.dirty || email.touched)" class="alert-sm"> Invalid Email </small>
+
+    <div class="form-input-material">
+        <input type="text" formControlName="phoneNumber" class="form-control-material" />
+        <label for="password">Phone Number</label>
+    </div>
+    <small *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert-sm"> Ivalid phone </small>
+
+    <button type="button" (click)="signup()" class="btn btn-ghost">Login</button>
+</div>
+<!-- </div> -->

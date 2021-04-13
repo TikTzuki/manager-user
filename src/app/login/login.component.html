@@ -1,0 +1,16 @@
+<!-- <div class="login-background d-flex align-items-center"> -->
+<div class="login-form" [formGroup]="authForm">
+    <h1>Login</h1>
+    <div class="form-input-material">
+        <input type="text" name="username" id="username" formControlName="username" class="form-control-material" />
+        <label for="username">Username</label>
+    </div>
+    <small *ngIf="username.invalid && (username.dirty || username.touched)" class="alert-sm"> Invalid phone number </small>
+    <div class="form-input-material">
+        <input type="password" name="password" id="password" formControlName="password" class="form-control-material" />
+        <label for="password">Password</label>
+    </div>
+    <small *ngIf="password.invalid && (password.dirty || password.touched)" class="alert-sm"> Invalid password </small>
+    <button type="button" (click)="login()" class="btn btn-ghost">Login</button>
+</div>
+<!-- </div> -->
