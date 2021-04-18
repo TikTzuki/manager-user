@@ -29,7 +29,8 @@ export class RegisterComponent implements OnInit {
       password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       confirmPassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       email: new FormControl(null ),
-      phoneNumber: new FormControl(null )
+      phoneNumber: new FormControl(null ),
+      scope: new FormControl('')
     });
   }
 
@@ -55,14 +56,27 @@ export class RegisterComponent implements OnInit {
         confirmPassword: this.confirmPassword.value,
         email: this.email.value,
         phoneNumber: this.phoneNumber.value,
-        scope: 'openid read:user write:user'
+        scope: this.scope.value
       };
       this.sercurityService.Register(this.authRequest);
     }
   }
+  isContraintScope(feature){
+    return this.scope.value.indexOf(feature) != -1 ? true : false;
+  }
 
   openModal(content){
     this.modalService.open(content);
+  }
+
+  handleCheckScope($event){
+    if($event.target.checked){
+      this.scope.setValue( (this.scope.value+' '+ $event.target.value+' ').trim() );
+    } else {
+      let str = this.scope.value;
+      this.scope.setValue(str.replace($event.target.value, '').trim());
+    }
+    console.log(this.authForm);
   }
 
   get username(): FormControl {
@@ -84,4 +98,8 @@ export class RegisterComponent implements OnInit {
   get phoneNumber(): FormControl{
     return this.authForm.get('phoneNumber') as FormControl;
   }
+
+  get scope():FormControl{
+    return this.authForm.get('scope') as FormControl;
+  } 
 }

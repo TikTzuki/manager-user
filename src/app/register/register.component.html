@@ -28,7 +28,30 @@
         <label for="password">Phone Number</label>
     </div>
     <small *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert-sm"> Ivalid phone </small>
-
+    <div class="input-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="openid" [checked]="this.isContraintScope('openid')" (change)="handleCheckScope($event)" style="opacity: 1; visibility: visible;">
+            <label class="form-check-label" for="flexCheckChecked">
+                    Active
+            </label>
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="read:user" [checked]="this.isContraintScope('read:user')" (change)="handleCheckScope($event)" style="opacity: 1; visibility: visible;">
+            <label class="form-check-label" for="flexCheckChecked">
+                   Read User 
+            </label>
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="write:user" [checked]="this.isContraintScope('write:user')" (change)="handleCheckScope($event)" style="opacity: 1; visibility: visible;">
+            <label class="form-check-label" for="flexCheckChecked">
+                   Write User 
+            </label>
+        </div>
+    </div>
     <button type="button" (click)="signup()" class="btn btn-ghost">Sign up</button>
 </div>
 <!-- </div> -->
