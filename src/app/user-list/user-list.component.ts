@@ -14,6 +14,7 @@ export class UserListComponent implements OnInit {
   users: IUser[];
   authSubscription: Subscription;
   authenticated:boolean = false;
+  currentUser: IUser;
   constructor(
     private securityService: SecurityService,
     private configurationService: ConfigurationService,
@@ -41,6 +42,10 @@ export class UserListComponent implements OnInit {
       this.service.getUsers().subscribe({
         next: res =>{
           this.users = res;
+        },
+        complete: ()=>{
+          this.currentUser = this.securityService.UserData;
+          console.log(this.currentUser);
         }
       })
   }

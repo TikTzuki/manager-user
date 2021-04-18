@@ -30,42 +30,44 @@
                 </tr>
             </thead>
             <tbody class="table-body">
-                <tr class="table-row" *ngFor="let user of users">
-                    <td class="table-cell table-cell-selection">
-                        <div class="table-cell-wrapper">
-                            <p>
-                                {{user.userName}}
-                            </p>
-                        </div>
-                    </td>
-                    <td class="table-cell table-cell-selection">
-                        <div class="table-cell-wrapper">
-                            <p>
-                                {{user.email}}
-                            </p>
-                        </div>
-                    </td>
-                    <td class="table-cell table-cell-selection">
-                        <div class="table-cell-wrapper">
-                            <p>
-                                {{user.phoneNumber}}
-                            </p>
-                        </div>
-                    </td>
-                    <td class="table-cell table-cell-selection">
-                        <ng-container *ngIf="securityService.checkScope('write:user'); else noPermit">
-                            <button class="btn btn-info btn-sm" routerLink="/user/{{user.id}}">
+                <ng-container *ngFor="let user of users">
+                    <tr class="table-row" *ngIf="user.id != currentUser.id">
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <p>
+                                    {{user.userName}}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <p>
+                                    {{user.email}}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <p>
+                                    {{user.phoneNumber}}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <ng-container *ngIf="securityService.checkScope('write:user'); else noPermit">
+                                <button class="btn btn-info btn-sm" routerLink="/user/{{user.id}}">
                                 Modify
                             </button>
-                            <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
+                                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
                                 Delete
                             </button>
-                        </ng-container>
-                        <ng-template #noPermit>
-                            You can't write!
-                        </ng-template>
-                    </td>
-                </tr>
+                            </ng-container>
+                            <ng-template #noPermit>
+                                You can't write!
+                            </ng-template>
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>
