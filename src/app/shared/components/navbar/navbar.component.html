@@ -1,4 +1,4 @@
-<nav class="navbar-primary">
+<nav class="navbar-primary" *ngIf="routes">
     <ul class="navbar-primary-menu">
         <li *ngFor="let item of routes">
             <a routerLink="/{{item.path}}" *ngIf="(item.data!=null && securityService.checkScope(item.data.scope))" routerLinkActive="active">

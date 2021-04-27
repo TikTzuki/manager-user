@@ -14,7 +14,6 @@ export class NavbarComponent implements OnInit {
     private configurationService: ConfigurationService,
     private securityService: SecurityService
   ) {
-    this.routes = routes;
   }
 
   ngOnInit(): void {
@@ -25,9 +24,6 @@ export class NavbarComponent implements OnInit {
         console.log(this.routes);
       })
     }
-  }
-
-  loadData(){
-
+      this.routes = routes;
   }
 }

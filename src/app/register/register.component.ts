@@ -1,6 +1,7 @@
 import { IAuthorizeRequest } from '../shared/models/authorizeRequest.model';
 import { SecurityService } from '../shared/service/security.service';
 import { IRegistingRequest } from '../shared/models/registingRequest.model';
+import { ConfigurationService } from '../shared/service/configuration.service';
 import { Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,11 +20,13 @@ export class RegisterComponent implements OnInit {
   constructor(
     private router: Router,
     private sercurityService: SecurityService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private configurationService: ConfigurationService
   ) { }
 
   ngOnInit() {
     // this.getAccessToken(this.authRequest);
+    this.configurationService.settingLoaded$.subscribe(x=>{
     this.authForm = new FormGroup({
       username: new FormControl(null, [Validators.required, Validators.pattern('')]),
       password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]),
@@ -32,6 +35,7 @@ export class RegisterComponent implements OnInit {
       phoneNumber: new FormControl(null ),
       scope: new FormControl('')
     });
+    })
   }
 
   // public getAccessToken(authRequest){

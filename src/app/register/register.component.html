@@ -1,5 +1,5 @@
 <!-- <div class="login-background d-flex align-items-center"> -->
-<div class="login-form" [formGroup]="authForm">
+<div class="login-form" *ngIf="authForm" [formGroup]="authForm">
     <h1>Create Account</h1>
     <div class="form-input-material">
         <input type="text" name="username" id="username" formControlName="username" class="form-control-material" />

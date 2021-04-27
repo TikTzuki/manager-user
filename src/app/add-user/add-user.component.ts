@@ -79,16 +79,22 @@ export class AddUserComponent implements OnInit {
   
   saveUser(id:number){
     console.log(this.userForm);
+    if(this.userForm.invalid){
+      alert("wrong input");
+      return;
+    }
     console.log(this.id);
     if(!isNaN(this.id)){
       console.log('update');
       this.service.updateUser(this.userForm.value).subscribe({
-        next: res=> console.log(res)
+        next: res=> {console.log(res), alert("modify success")},
+        error: err=> alert("wrong input")
       })
     } else {
       console.log('create');
       this.service.createUser(this.userForm.value).subscribe({
-        next: res => console.log(res)
+        next: res => {console.log(res), alert("create success")},
+        error: err=>alert("wrong input")
       })
     }
   }

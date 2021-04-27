@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SecurityService } from '../shared/service/security.service';
+import { ConfigurationService } from '../shared/service/configuration.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -18,15 +19,18 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private sercurityService: SecurityService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private configurationService:ConfigurationService
   ) { }
 
   ngOnInit() {
     // this.getAccessToken(this.authRequest);
-    this.authForm = new FormGroup({
-      username: new FormControl(null, [Validators.required, Validators.pattern('')]),
-      password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')])
-    });
+    this.configurationService.settingLoaded$.subscribe(x => {
+      this.authForm = new FormGroup({
+        username: new FormControl(null, [Validators.required, Validators.pattern('')]),
+        password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')])
+      });
+    })
   }
 
   // public getAccessToken(authRequest){
