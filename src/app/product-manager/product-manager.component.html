@@ -1,0 +1,109 @@
+<div class="container" *ngIf="authenticated">
+    <h2> Product manager </h2>
+    <div class="row">
+        <a class="btn btn-primary" routerLink="/product-new"> New Product </a>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let statusObj of ProductStatus">
+            <p class="nav-link" (click)="changeTab(statusObj.value)" [ngClass]="{'active':selectedTab==statusObj.value}">
+                {{statusObj.name}}
+            </p>
+        </li>
+    </ul>
+    <div class="table-container-tab">
+        <div class="search-section d-flex align-items-center">
+            <form class="search-form row" *ngIf="searchFormGroup" [formGroup]="searchFormGroup">
+                <div class="mb-3 col-3">
+                    <label class="min-price">Min Price</label>
+                    <input type="text" class="form-control" (keypress)="numberOnly($event)" formControlName="minPrice">
+                </div>
+                <div class="mb-3 col-3">
+                    <label class="max-price">Max Price</label>
+                    <input type="text" class="form-control" (keypress)="numberOnly($event)" formControlName="maxPrice">
+                </div>
+                <div class="mb-3 col-3">
+                    <label class="form-label">Product Id</label>
+                    <input type="text" class="form-control" formControlName="id">
+                </div>
+            </form>
+            <button class="btn btn-primary" (click)="searchProduct()">Search</button>
+            <button class="btn clear-btn" (click)="loadSearchForm()"><i class="fas fa-times"></i>  </button>
+        </div>
+        <div class="products table">
+            <table>
+                <thead class="table-header">
+                    <tr>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Image </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Name </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Price </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Available </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Action </p>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <tr class="table-row" *ngFor="let product of productList">
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <a class="product-desc-link-image">
+                                    <img class="product-desc-image" style="width: 100px;" [src]="product.skus[0]?.Images[0]">
+                                </a>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <p>
+                                    {{product.attributes.name}}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <p *ngIf="selelectedTab!=EProductStatus.Deleted">
+                                    {{product?.skus[0]?.price| number}}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <p *ngIf="selelectedTab!=EProductStatus.Deleted">
+                                    {{product?.skus[0]?.quantity}}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="table-cell table-cell-selection">
+                            <div class="table-cell-wrapper">
+                                <button class="btn btn-info btn-sm" routerLink="/product/{{product.id}}">
+                                Modify
+                            </button>
+                                <button class="btn btn-danger btn-sm" (click)="deleteProduct(product)">
+                                Delete
+                            </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-pager [model]="paginationInfo" (changed)="onPageChanged($event)"></app-pager>
+</div>

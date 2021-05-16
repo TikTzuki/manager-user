@@ -12,6 +12,8 @@ import { ConfigurationService } from './service/configuration.service';
 import { SecurityService } from './service/security.service';
 import { DataService } from './service/data.service';
 import { UserService } from './service/user.service';
+import { PagerComponent } from './components/pager/pager.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,9 @@ import { UserService } from './service/user.service';
   declarations: [
     NavbarComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    PagerComponent,
+    ConfirmModalComponent
   ],
   exports: [
     CommonModule,
@@ -33,7 +37,9 @@ import { UserService } from './service/user.service';
     RouterModule,
     NavbarComponent,
     HeaderComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PagerComponent,
+    ConfirmModalComponent
   ],
 })
 export class SharedModule {

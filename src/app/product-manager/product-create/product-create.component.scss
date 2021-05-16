@@ -1,0 +1,110 @@
+.table {
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+}
+
+.table-body,
+.table-header {
+    overflow: auto;
+    font-size: 14px;
+}
+
+.table-header-inner {
+    overflow: hidden;
+}
+
+.table table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.table th {
+    padding: 0;
+    color: #333;
+    text-align: left;
+    font-weight: 700;
+    border: 1px solid #eee;
+}
+
+.table-cell-wrapper {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 56px;
+    padding: 12px 4px;
+}
+
+.table-row {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    color: #333;
+}
+
+.table td {
+    padding: 0;
+    border: 1px solid #eee;
+}
+
+.specifications-module {
+    padding: 20px;
+}
+
+.upload-container {
+    display: flex;
+    border: 1px solid #2b3553;
+    border-radius: 0.4285rem;
+    width: 100%;
+}
+
+.upload-container .add-image {
+    cursor: pointer;
+}
+
+.upload-box {
+    position: relative;
+    margin: 1rem;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #2b3553;
+    border-radius: 0.4rem;
+}
+
+.upload-box input[type=file] {
+    opacity: 0;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.upload-box .thumnail-prieview {
+    width: 100px;
+    max-height: 100px;
+}
+
+.upload-box .fas {
+    position: absolute;
+    right: 0;
+    top: 10;
+    z-index: 2;
+    cursor: pointer;
+    color: red;
+}
+
+.upload-box .fas:hover {
+    font-size: large;
+}
+
+.module {
+    margin-top: 2rem;
+}
+
+.input-textarea {
+    min-height: 120px;
+    width: 100%;
+    padding: 0.625rem;
+    resize: vertical;
+}

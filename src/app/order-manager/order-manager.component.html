@@ -1,0 +1,232 @@
+<div class="containter" *ngIf="Authenticated">
+    <h2> Order manager </h2>
+    <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let statusObj of OrderStatus">
+            <p class="nav-link" (click)="changeTab(statusObj.value)" [ngClass]="{'active':selectedTab==statusObj.value}">
+                {{statusObj.name}}</p>
+        </li>
+    </ul>
+    <div class="table-container-tab">
+        <div class="search-section d-flex align-items-center">
+            <form class="search-form row" *ngIf="searchFormGroup" [formGroup]="searchFormGroup">
+                <div class="mb-3 col-3">
+                    <label class="form-label">Create before</label>
+                    <input type="date" class="form-control" formControlName="createdBefore">
+                </div>
+                <div class="mb-3 col-3">
+                    <label class="form-label">Create after</label>
+                    <input type="date" class="form-control" formControlName="createdAfter">
+                </div>
+                <div class="mb-3 col-3">
+                    <label class="form-label">Update before</label>
+                    <input type="date" class="form-control" formControlName="updateBefore">
+                </div>
+                <div class="mb-3 col-3">
+                    <label class="form-label">Update after</label>
+                    <input type="date" class="form-control" formControlName="updateAfter">
+                </div>
+            </form>
+            <button class="btn btn-primary" (click)="searchOrder()"> Search </button>
+            <button class="btn clear-btn" (click)="loadSearchForm()"><i class="fas fa-times"></i>  </button>
+        </div>
+        <!-- <div *ngIf="selectedOrders.length !=0" class="action-multiple d-flex">
+            <button class="btn btn-sm" (click)="print()">Print</button>
+            <div ngbDropdown class="d-inline-block" *ngIf="selectedTab==EOrderStatus.Pending || selectedTab==EOrderStatus.ReadyToShip">
+                <button class="btn btn-sm" id="dropdownBasic1" ngbDropdownToggle>Change Status <i class="fas fa-angle-down"></i> </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem *ngIf="selectedTab==EOrderStatus.Pending" (click)="changeStatusOrders(selectedOrders, EOrderStatus.ReadyToShip)">Ready To Ship</button>
+                    <button ngbDropdownItem (click)="changeStatusOrders(selectedOrders, EOrderStatus.Canceled)">Cancel</button>
+                </div>
+            </div>
+        </div> -->
+        <div class="orders table">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <input type="checkbox" (change)="onCheckOrder($event)" [checked]="selectedOrders.length!=0">
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                Toggle
+                            </div>
+                        </th> -->
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Order id </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Customer </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Payment Method </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Order date </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Updated date </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Total price </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Status </p>
+                            </div>
+                        </th>
+                        <th class="table-cell table-header-node">
+                            <div class="table-cell-wrapper">
+                                <p> Actions </p>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <ng-container *ngFor="let order of orders">
+                        <tr class="table-row">
+                            <!-- <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <input type="checkbox" (change)="onCheckOrder($event, order.id)" [checked]="isSelected(order.order_id)">
+                                </div>
+                            </td> -->
+                            <!-- <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <button class="btn btn-sm btn-info" (click)="toggleOrderItem(order.id)">
+                                     <i class="fas fa-plus" ></i>
+                                    </button>
+                                </div>
+                            </td> -->
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <p> {{order.order_id}} </p>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper" style="max-width: 10rem;">
+                                    <ng-container *ngFor="let keyNValue of Object.entries(order.address_shipping)">
+                                        <p style="word-wrap: break-word;"> {{keyNValue[1]}} </p>
+                                    </ng-container>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <p> {{order.payment_method}} </p>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <p> {{order.created_at}}</p>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <p> {{order.updated_at}}</p>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <p> {{order.price}}</p>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <p> {{order.statuses[0]}}</p>
+                                </div>
+                            </td>
+                            <td class="table-cell table-cell-selection">
+                                <div class="table-cell-wrapper">
+                                    <div class="d-flex flex-column">
+                                        <button *ngIf="order.status==EOrderStatus.Pending" class="btn btn-sm btn-success" (click)="changeStatusOrders([order], EOrderStatus.ReadyToShip)"> Ready to ship </button>
+                                        <button *ngIf="order.status==EOrderStatus.Pending" class="btn btn-sm btn-danger" (click)="changeStatusOrders([order], EOrderStatus.Canceled)"> Cancel </button>
+                                        <button *ngIf="order.status!=EOrderStatus.Pending" class="btn btn-sm btn-info"> Details </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="isToggled(order.id)" class="nested-table-child">
+                            <td></td>
+                            <td colspan="10">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="table-cell table-header-node">
+                                                <div class="table-cell-wrapper">
+                                                    <p>
+                                                        Image
+                                                    </p>
+                                                </div>
+                                            </th>
+                                            <th class="table-cell table-header-node">
+                                                <div class="table-cell-wrapper">
+                                                    <p>
+                                                        Product Name
+                                                    </p>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell-wrapper">
+                                                    <p>
+                                                        Variation
+                                                    </p>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="table-cell-wrapper">
+                                                    <p>
+                                                        Price
+                                                    </p>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of order.orderItems">
+                                            <td>
+                                                <div class="table-cell-wrapper image-wrapper d-flex justify-content-center">
+                                                    <img [src]="item.sku.images[0].url | prependHost" class="product-desc-image">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    {{item.name}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    {{item.variation}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    {{item.price}}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-pager [model]="paginationInfo" (changed)="onPageChanged($event)"></app-pager>
+</div>
+<p>
+    order-manager works!
+</p>

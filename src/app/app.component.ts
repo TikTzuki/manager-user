@@ -35,5 +35,6 @@ export class AppComponent {
 
   swichlog(){
     this.isLoggin=!this.isLoggin;
+
   }
 }

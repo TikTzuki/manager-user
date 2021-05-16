@@ -1,0 +1,189 @@
+<h2> Product </h2>
+<form *ngIf="productForm" [formGroup]="productForm">
+    <div class="name-module module">
+        <div class="mb-3 col-10">
+            <label class="form-label">Product name</label>
+            <input type="text" formControlName="productName" class="form-control">
+            <div *ngIf="productForm.productName.invalid && (productForm.productName.dirty || productForm.productName.touched)" class="alert-sm">
+                <small>*</small>
+            </div>
+        </div>
+    </div>
+    <div class="size-module module" formArrayName="sizes">
+        <div class="mb-3 col-10">
+            <label class="form-label"> Size(s) </label>
+            <div *ngFor="let size of productForm.sizes.controls; let i = index" class="input-group">
+                <input type="text" [formControlName]="i" class="form-control" />
+                <div class="input-group-append">
+                    <button class="btn btn-sm" (click)="productForm.removeSize(i)">&#10006;</button>
+                </div>
+                <div *ngIf="size.invalid && (size.dirty || size.touched)" class="alert-sm">
+                    <small> * </small>
+                    <small *ngIf="size.error?.required"> Size is required </small>
+                </div>
+            </div>
+            <button class="btn btn-sm" (click)="productForm.addSize()"> Add size </button>
+        </div>
+    </div>
+    <div class="color-module module" formArrayName="colors">
+        <div class="mb3 col-10">
+            <label class="form-label"> Color(s) </label>
+            <div *ngFor="let colorsFormGroup of productForm.colors.controls; let colorIndex = index" class="input-group" [formGroupName]="colorIndex">
+                <!-- <section [formGroupName]="colorIndex"> -->
+                <input type="text" formControlName="colorFamily" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-sm" (click)="productForm.removeColor(colorIndex)">&#10006;</button>
+                </div>
+                <div *ngIf="colorsFormGroup.controls.colorFamily.invalid && (colorsFormGroup.controls.colorFamily.dirty)" class="alert-sm">
+                    <small> * </small>
+                    <small *ngIf="colorsFormGroup.controls.colorFamily.errors?.required">
+                        Color is required.
+                    </small>
+                </div>
+                <div class="upload-container" formArrayName="images">
+                    <div *ngFor="let imageFormGroup of colorsFormGroup.controls.images.controls; let imageIndex = index" class="">
+                        <div class="upload-box" [formGroupName]="imageIndex">
+                            <i class="fas fa-times-circle" (click)="colorsFormGroup.controls.images.removeImage(imageIndex)"></i>
+                            <input type="file" name="image" class="input-image" (change)="colorsFormGroup.controls.images.showPreview($event, imageIndex)">
+                            <img [src]="imageFormGroup.controls?.url?.value?.startsWith('data:image/')? imageFormGroup.controls.url.value : (imageFormGroup.controls.url.value)" class="thumnail-prieview">
+                        </div>
+                    </div>
+                    <div class="add-image upload-box" (click)="colorsFormGroup.controls.images.addImage()">
+                        +
+                    </div>
+                </div>
+                <!-- </section> -->
+            </div>
+            <button class="btn btn-sm" (click)="productForm.addColor()"> Add color </button>
+        </div>
+    </div>
+    <div class="skus-module module">
+        <button class="btn btn-sm" (click)="productForm.addSku()"> Add sku</button>
+        <label class="form-label" style="margin-left: 2rem;">Sku(s)</label>
+        <div class="table">
+            <div class="table-inner">
+                <div class="table-header">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="table-cell table-header-node">
+                                    <p class="table-cell-wrapper">
+                                        Variation
+                                    </p>
+                                </th>
+                                <th class="table-cell table-header-node">
+                                    <p class="table-cell-wrapper">
+                                        Price
+                                    </p>
+                                </th>
+                                <th class="table-cell table-header-node">
+                                    <p class="table-cell-wrapper">
+                                        Quantity
+                                    </p>
+                                </th>
+                                <th class="table-cell table-header-node">
+                                    <p class="table-cell-wrapper">
+                                        SellerSku
+                                    </p>
+                                </th>
+                                <th class="table-cell table-header-node">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="skus">
+                            <tr *ngFor="let skuForm of productForm.skus.controls; let i = index" [formGroupName]="i" class="table-row form-item">
+                                <td>
+                                    <div class="table-cell-wrapper">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Color - Size</span>
+                                        </div>
+                                        <select name="color" id="color" formControlName="colorFamily" class="form-control custom-select">
+                                            <option *ngFor="let colorValue of productForm.colorValues" [value]="colorValue">{{colorValue}}</option>
+                                        </select>
+                                        <select name="size" id="size" formControlName="size" class="form-control custom-select">
+                                            <option *ngFor="let sizeValue of productForm.sizes.value" [value]="sizeValue">{{sizeValue}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-cell-wrapper">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">VND</span>
+                                        </div>
+                                        <input class="form-control" type="text" formControlName="price">
+                                        <div *ngIf="skuForm.controls.price.invalid" class="alert-sm"><small>*</small></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-cell-wrapper">
+                                        <input class="form-control" type="text" formControlName="quantity">
+                                        <div *ngIf="skuForm.controls.quantity.invalid" class="alert-sm"><small>*</small></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-cell-wrapper">
+                                        <input class="form-control" type="text" formControlName="sellerSku" (change)="commitProductForm()">
+                                        <div *ngIf="skuForm.controls.sellerSku.invalid" class="alert-sm"><small>*</small></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-cell-wrapper">
+                                        <button class="btn btn-sm" (click)="productForm.removeSku(i)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="desciption-module module">
+        <label class="form-label"> Descriptions </label>
+        <ckeditor [editor]="Editor" formControlName="description"></ckeditor>
+    </div>
+    <div class="specifications-module module">
+        <div class="d-flex justify-content-around">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Weight (kg)</span>
+                </div>
+                <input type="text" class="form-control" formControlName="weight">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Length (cm)</span>
+                </div>
+                <input type="text" class="form-control" formControlName="length">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                    Width (cm)
+                </span>
+                </div>
+                <input type="text" class="form-control" formControlName="width">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                    Height (cm)
+                </span>
+                </div>
+                <input type="text" class="form-control" formControlName="height">
+            </div>
+        </div>
+    </div>
+    <div class="control-module module">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-lg" routerLink="/products"> Cancel </button>
+            <button class="btn btn-lg btn-primary" (click)="saveProduct()"> Save </button>
+        </div>
+    </div>
+</form>

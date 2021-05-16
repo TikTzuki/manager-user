@@ -1,0 +1,14 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="title" id="modal-basic-title">Confirm your action</h4>
+        </div>
+        <div class="modal-body">
+            <p> {{message}} </p>
+        </div>
+        <div class="modal-footer d-flex justify-content-around">
+            <button type="button" class="btn btn-outline-dark" (click)="onDimiss()">Cancel</button>
+            <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Confirm</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="esh-pager">
+    <div class="container">
+        <article class="esh-pager-wrapper row">
+            <nav>
+                <button class="btn btn-primary btn-sm esh-pager-item esh-pager-item--navigable" id="Previous" *ngIf="model?.actualPage>0" (click)="onPreviousClicked($event)" aria-label="Previous">
+                    Previous
+                </button>
+                <!-- <span class="esh-pager-item">
+                    Showing {{model?.items}} of {{model?.totalItems}} products - Page {{model?.actualPage +1}} -
+                    {{model?.totalPages}}
+                </span> -->
+                <button class="btn btn-sm page-button" *ngFor="let page of pageNumber" [ngClass]="(model?.actualPage==page)?'btn-primary':'btn-light'" (click)="onPageClicked(page)">{{page}}</button>
+                <button class="btn btn-primary btn-sm esh-pager-item esh-pager-item--navigable" id="Next" *ngIf="model?.actualPage+1<model?.totalPages" (click)="onNextClicked($event)" aria-label="Next">
+                    Next</button>
+            </nav>
+        </article>
+    </div>
+</div>
